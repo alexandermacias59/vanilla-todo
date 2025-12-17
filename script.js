@@ -1,13 +1,31 @@
 function displayTodos(todos) {
     const todosContainer = document.getElementById('todos-container');
    todosContainer.innerHTML = '';
+
+   function calculateDaysLeft(endDateIso) {
+       const endDate = new Date(endDateIso);
+       const currentDate = new Date();
+         const timeDiff = endDate - currentDate;
+         const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+            return daysLeft;
+    }
    for (const todo of todos) {
 
-         const card = document.createElement('div');
+        const card = document.createElement('div');
         card.classList.add('todo-card');
 
         const titleSpan = document.createElement('span');
-        titleSpan.appendChild(document.createTextNode(todo.title));
+        const textNode = document.createTextNode(todo.title);
+        titleSpan.appendChild(textNode);
+
+        if (todo.done === true) {
+            titleSpan.classList.add('todo-done');
+            const checkDoneCircle = document.createElement("span");
+            checkDoneCircle.classList.add('check-done-circle');
+            titleSpan.prepend(checkDoneCircle);
+        } else {
+            titleSpan.classList.add('todo-pending');
+        }
 
         const detailBtn = document.createElement('button');
         detailBtn.appendChild(document.createTextNode('>'));
@@ -19,6 +37,14 @@ function displayTodos(todos) {
         card.appendChild(titleSpan);
         card.appendChild(detailBtn);
         todosContainer.appendChild(card);
+
+        const daysSPan = document.createElement('span');
+        daysSPan.classList.add('days-left-span');
+        const daysLeft = calculateDaysLeft(todo.endDate);
+        daysSPan.appendChild(document.createTextNode(`Mancano: ${daysLeft} giorni`));
+        daysSPan.style.marginLeft = '15px';
+        titleSpan.appendChild(daysSPan);
+        
     }
 }
 getAllTodos().then(results => displayTodos(results));
