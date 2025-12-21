@@ -1,70 +1,101 @@
-function displayTodos(todos) {
-    const todosContainer = document.getElementById('todos-container');
-   todosContainer.innerHTML = '';
+const todosContainer = document.getElementById('todos-container');
+const showDeleteBtn = document.getElementById('show-delete-btn');
 
-   function calculateDaysLeft(endDateIso) {
-       const endDate = new Date(endDateIso);
-       const currentDate = new Date();
-         const timeDiff = endDate - currentDate;
-         const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-            return daysLeft;
-    }
-   for (const todo of todos) {
+showDeleteBtn.addEventListener('click', toggleDeleteMode);
+
+function toggleDeleteMode() {
+    const todoCards = document.querySelectorAll('.todo-card');
+
+    todoCards.forEach(card => {
+        card.classList.toggle('show-delete');
+    });
+
+    showDeleteBtn.textContent =
+        showDeleteBtn.textContent === 'Elimina'
+        ? 'Annulla'
+        : 'Elimina';
+}
+
+function calculateDaysLeft(endDateIso) {
+    const endDate = new Date(endDateIso);
+    const currentDate = new Date();
+    return Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24));
+}
+
+function displayTodos(todos) {
+    todosContainer.innerHTML = '';
+
+    for (const todo of todos) {
 
         const card = document.createElement('div');
         card.classList.add('todo-card');
 
         const titleSpan = document.createElement('span');
-        const textNode = document.createTextNode(todo.title);
-        titleSpan.appendChild(textNode);
+        titleSpan.textContent = todo.title;
 
-        if (todo.done === true) {
+        if (todo.done) {
             titleSpan.classList.add('todo-done');
-            const checkDoneCircle = document.createElement("span");
-            checkDoneCircle.classList.add('check-done-circle');
-            titleSpan.prepend(checkDoneCircle);
+            const check = document.createElement('span');
+            check.classList.add('check-done-circle');
+            titleSpan.prepend(check);
         } else {
             titleSpan.classList.add('todo-pending');
         }
 
+        const daysSpan = document.createElement('span');
+        daysSpan.classList.add('days-left-span');
+        daysSpan.textContent = `Mancano: ${calculateDaysLeft(todo.endDate)} giorni`;
+        titleSpan.appendChild(daysSpan);
+
+        const buttonsContainer = document.createElement('div');
+        buttonsContainer.classList.add('todo-buttons');
+
         const detailBtn = document.createElement('button');
-        detailBtn.appendChild(document.createTextNode('>'));
+        detailBtn.textContent = '>';
         detailBtn.classList.add('detail-btn');
         detailBtn.addEventListener('click', () => {
-            window.location.assign("./detail.html?todoId=" + todo.id);
+            window.location.assign(`./detail.html?todoId=${todo.id}`);
         });
 
-        card.appendChild(titleSpan);
-        card.appendChild(detailBtn);
-        todosContainer.appendChild(card);
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Elimina';
+        deleteBtn.classList.add('delete-btn');
 
-        const daysSPan = document.createElement('span');
-        daysSPan.classList.add('days-left-span');
-        const daysLeft = calculateDaysLeft(todo.endDate);
-        daysSPan.appendChild(document.createTextNode(`Mancano: ${daysLeft} giorni`));
-        daysSPan.style.marginLeft = '15px';
-        titleSpan.appendChild(daysSPan);
-        
+        deleteBtn.addEventListener('click', () => {
+            //  rimuove subito la card dal DOM
+            card.remove();
+
+            //  elimina il todo dai dati (backend / localStorage)
+            deleteTodo(todo.id);
+        });
+
+
+        buttonsContainer.appendChild(detailBtn);
+        buttonsContainer.appendChild(deleteBtn);
+
+        card.appendChild(titleSpan);
+        card.appendChild(buttonsContainer);
+        todosContainer.appendChild(card);
     }
 }
-getAllTodos().then(results => displayTodos(results));
 
+getAllTodos().then(displayTodos);
 
-function orderByAlfabetic(){
-    getAllTodos().then(results => {
-        results.sort((a, b) => a.title.localeCompare(b.title));
-        displayTodos(results);
-    }); 
-}
-const btnAlfabeticOrder = document.getElementById('btn-alfabetic-order');
-btnAlfabeticOrder.addEventListener('click', orderByAlfabetic);
+/* ORDINAMENTI */
+document.getElementById('btn-alfabetic-order')
+    .addEventListener('click', () => {
+        getAllTodos().then(todos => {
+            todos.sort((a, b) => a.title.localeCompare(b.title));
+            displayTodos(todos);
+        });
+    });
 
-
-function orderByRecent(){
-    getAllTodos().then(results => {
-        results.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
-        displayTodos(results);
-    })
-}
-const btnRecentOrder = document.getElementById('btn-recent-order');
-btnRecentOrder.addEventListener('click', orderByRecent);
+document.getElementById('btn-recent-order')
+    .addEventListener('click', () => {
+        getAllTodos().then(todos => {
+            todos.sort((a, b) =>
+                new Date(b.creationDate) - new Date(a.creationDate)
+            );
+            displayTodos(todos);
+        });
+    });

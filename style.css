@@ -1,7 +1,7 @@
-*{
-    
+* {
     box-sizing: border-box;
 }
+
 html, body {
     margin: 0;
     padding: 0;
@@ -9,58 +9,57 @@ html, body {
     background-color: #080808;
 }
 
-body{
+body {
     width: 100vw;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
-.page{
+
+.page {
     max-width: 800px;
     padding: 20px;
 }
-h1{
+
+h1 {
     color: white;
-    
 }
-header{
+
+header {
     text-align: center;
     margin-bottom: 20px;
 }
-#todos-container{
+
+#todos-container {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
-.todo-card{
+
+.todo-card {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #383535;
     padding: 15px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     color: white;
 }
-.detail-btn{
-    margin: 0 20px;
-    padding: 10px 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+.btns-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
-.detail-btn:hover{
-    background-color: #0056b3;
-}
-.order-btn{
+
+.order-btn {
     margin-left: auto;
     display: flex;
     gap: 10px;
 }
-.order-btn button{
+
+.order-btn button,
+#show-delete-btn {
     padding: 8px 12px;
     background-color: #e01111;
     color: white;
@@ -69,17 +68,55 @@ header{
     cursor: pointer;
 }
 
+.detail-btn {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.detail-btn:hover {
+    background-color: #0056b3;
+}
+
+.todo-buttons {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+/* DELETE MODE */
+.delete-btn {
+    display: none;
+    padding: 8px 12px;
+    background-color: #e01111;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.todo-card.show-delete .delete-btn {
+    display: inline-block;
+}
+
+/* TODO STATE */
 .todo-done {
     text-decoration: line-through;
 }
+
 .todo-pending {
     text-decoration: none;
 }
+
 .days-left-span {
     font-weight: bold;
     text-decoration: none;
-    display: inline-block;
+    margin-left: 15px;
 }
+
 .check-done-circle {
     display: inline-block;
     border-radius: 50%;
@@ -87,5 +124,4 @@ header{
     width: 12px;
     height: 12px;
     margin-right: 8px;
-    vertical-align: middle;
 }
