@@ -7,7 +7,29 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div>
+        <form id="form-invio-dati">
+            <div>
+                <label for="description">Inserisci la descrizione</label>
+                <textarea name="description" id="description" required></textarea>
+            </div>
+            <div>
+                <label for="title">Inserisci il titolo</label>
+                <input type="text" name="title" id="title" required>
+            </div>
+            <div>
+                <label for="endDate">Inserisci la data di scadenza</label>
+                <input type="datetime-local" name="endDate" id="endDate" required>
+            </div>
+            <div>
+                <label for="color">Inserisci il colore</label>
+                <input type="color" name="color" id="color" required>
+            </div>
+            <div></div>
+                <button type="submit">Invia</button>
+            </div>
+        </form>
+    </div>
 </body>
 <script src="./todo-service.js"></script>
 <script src="./new-script.js"></script>
