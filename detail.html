@@ -3,36 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/detail-style.css">
-    <title>Todo app</title>
+    <title>todo app</title>
+    <link rel="stylesheet" href="./detail-style.css">
 </head>
 <body>
     <div class="page">
-
-        <header >
-            <div class="back-link">
-                <a  href="./index.html">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m14.03 21.25l-8.26-8.26a5.999 5.999 0 0 1 8.483-8.483l4.734 4.734l.622.622m-7.199.505h6.077c.447 0 .848-.195 1.122-.505m.378-7.072v6.077c0 .382-.142.73-.378.995"/></svg>
-            </a>
-            </div>
-            <div class="todos-container">     
-            <p id="todo-title">Sono il dettaglio del todo</p>
-            <p id="todo-description"></p>
-            <p id="todo-creation-date"></p>
-            <p id="todo-done"></p>
-            <p id="todo-end-date"></p>
-            <p id="todo-color"></p>
-            </div>
-           
+        <header>
+            <a class="back-link" href="./">back</a>
+            <h1 id="todo-title"></h1>
+            <div class="colored-dot" id="todo-color"></div>
         </header>
         <main>
-
+            <div class="detail-info">
+                <span id="todo-description"></span>
+            </div>
+            <div class="detail-info">
+                <b>Data di creazione: </b>
+                <span id="todo-creation-date"></span>
+            </div>
+            <div class="detail-info">
+                <b>Data di scadenza: </b>
+                <span id="todo-end-date"></span>
+            </div>
+            <!-- <div class="detail-info">
+                <span id="todo-color"></span>
+            </div> -->
+            <div class="detail-info">
+                <b>Stato: </b>
+                <span id="todo-done"></span>
+            </div>
+            <div>
+                <button id="status-btn" onclick="changeStatus()"></button>
+                <button onclick="deleteTodoAndRedirect()">Elimina</button>
+            </div>                        
         </main>
-        
-    </div>
-    
 
+    </div>
 </body>
-<script src="/todo-service.js"></script>
-<script src="/detail-script.js"></script>
+<script src="./todo-service.js"></script>
+<script src="./detail-script.js"></script>
 </html>

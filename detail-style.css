@@ -1,46 +1,65 @@
 *{
-    
     box-sizing: border-box;
+    /* border: 1px solid greenyellow; */
 }
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f4f4f4;
+
+html, body{
+    margin: 0px;
+    padding: 0px;
 }
+
 body{
     width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: white;
+    background-color: #282c34;
 }
+
 .page{
     max-width: 800px;
-    padding: 20px;
+    padding: 16px;
 }
+
 header{
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
 }
+
 .back-link{
-    margin: 0 20px;
-    padding: 10px 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 50%;
+    font-size: x-large;
+    min-width: 30px;
+    min-height: 30px;
+    text-decoration: none;
+    color: black;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
 }
+
 .back-link:hover{
-    background-color: #0056b3;
+    background-color: black;
+    color: white;
 }
-.todos-container{
+
+.detail-info{
+    font-size: x-large;
+}
+
+main{
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: 16px;
+}
+
+.colored-dot{
+    min-height: 30px;
+    min-width: 30px;
+    border-radius: 50%;
 }

@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Todo app</title>
+    <title>todo app</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <div class="page">
         <header>
-            <h1>Todo app</h1>
-
-            <div class="btns-container">
-                <div class="order-btn">
-                    <button id="btn-alfabetic-order">A-Z</button>
-                    <button id="btn-recent-order">Più recente</button>
-                </div>
-
-                <div class="show-deleteBtn-container">
-                    <button id="show-delete-btn">Elimina</button>
-                </div>
-            </div>
+            <h1>Todo App</h1>
         </header>
-
         <main>
-            <div id="todos-container"></div>
-        </main>
-    </div>
+            <div>
+                <button class="sort-btn" onclick="orderByTitle()">Ordina per titolo</button>
+                <button class="sort-btn" onclick="orderByCreationDate()">Ordina per data di creazione</button>
+            </div>
+            <div id="todos-container">
 
-    <script src="/todo-service.js"></script>
-    <script src="/script.js"></script>
+            </div>
+        </main>
+        <div class="actions-container">
+            <a class="action" href="./new.html">+</a>
+        </div>
+    </div>
 </body>
+<script src="./todo-service.js"></script>
+<script src="./script.js"></script>
 </html>

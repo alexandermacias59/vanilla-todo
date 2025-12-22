@@ -1,44 +1,76 @@
-const searchParams = new URLSearchParams(window.location.search);
-
-const todoId = searchParams.get('todoId');
-
-getTodoById(todoId).then(todo => {
-    // Display the todo details on the page
+function displayTodo(todo) {
     const titleHeader = document.getElementById('todo-title');
     titleHeader.innerHTML = todo.title;
-    const descriptionHeader = document.getElementById('todo-description');
-    descriptionHeader.innerHTML = todo.description;
-    const creationDateHeader = document.getElementById('todo-creation-date');
-    creationDateHeader.innerHTML = formatDate(todo.creationDate);
 
-    const doneHeader = document.getElementById('todo-done');
+    const descriptionSpan = document.getElementById('todo-description');
+    descriptionSpan.innerHTML = todo.description;
+
+    const creationDateSpan = document.getElementById('todo-creation-date');
+    creationDateSpan.innerHTML = formaDate(todo.creationDate);
+
+    const endDateSpan = document.getElementById('todo-end-date');
+    endDateSpan.innerHTML = formaDate(todo.endDate);
+
+    const colorDiv = document.getElementById('todo-color');
+    colorDiv.style.backgroundColor = todo.color;
+
+    const doneSpan = document.getElementById('todo-done');
     if (todo.done) {
-        doneHeader.innerHTML = 'Yes';
+        doneSpan.innerHTML = 'completato';
     } else {
-        doneHeader.innerHTML = 'No';
+        doneSpan.innerHTML = 'da completare'
     }
-    
-    const endDateHeader = document.getElementById('todo-end-date');
-    endDateHeader.innerHTML = formatDate(todo.endDate);
-    
-    const colorHeader = document.getElementById('todo-color');
-    // pulisci eventuale contenuto precedente
-    colorHeader.innerHTML = '';
-    const colorBox = document.createElement('div');
-    colorBox.style.width = '20px';
-    colorBox.style.height = '20px';
-    colorBox.style.backgroundColor = todo.color;
-    colorBox.style.border = '1px solid #000';
-    colorBox.style.display = 'inline-block';
-    colorBox.style.verticalAlign = 'middle';
 
-    colorHeader.appendChild(colorBox);
+    const statusBtn = document.getElementById("status-btn");
+    if (todo.done) {
+        statusBtn.innerHTML = "riattiva";
+    } else {
+        statusBtn.innerHTML = "completa";
+    }
 
-   
+}
+
+function formaDate(dateISO) {
+    const date = new Date(dateISO);
+
+    // const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+
+    // return formattedDate;
+
+    const options = {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+    };
+
+    return date.toLocaleDateString("it-IT", options);
+}
+
+const searchParams = new URLSearchParams(window.location.search);
+
+const id = searchParams.get('todoId');
+
+let selectedTodo;
+
+getTodo(id).then(result => {
+    selectedTodo = result;
+    displayTodo(result)
 });
 
-function formatDate(dateIso) {
-    const date = new Date(dateIso);
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    return formattedDate;
+
+function deleteTodoAndRedirect() {
+
+    if (confirm("Vuoi veramente cancellare il todo???")) {
+        deleteTodo(selectedTodo.id).then(_ => {
+            window.location.assign('./')
+        });  
+    }
+}
+
+function changeStatus() {
+    changeDoneStatus(selectedTodo.id, !selectedTodo.done)
+    .then(_ => {
+        selectedTodo.done = !selectedTodo.done;
+        displayTodo(selectedTodo);
+    })
 }
